@@ -1,0 +1,37 @@
+Yes. If you mean a K30 fingerprint attendance machine (such as a ZKTeco K30), you can build a system where:
+
+Admin clicks “Add User”.
+Enters the user's ID/name.
+Clicks “Add Fingerprint”.
+The system communicates with the K30.
+The user places their finger on the K30.
+The system captures the fingerprint template.
+The fingerprint is saved against that user ID.
+Later, when the user scans their finger, the K30 identifies them and records attendance.
+
+A typical design would be:
+
+Your Application
+      │
+      │ Add User
+      ▼
+User Form
+ ├── User ID
+ ├── Name
+ └── Add Fingerprint button
+              │
+              ▼
+       K30 Device
+       Finger Scan
+              │
+              ▼
+    Fingerprint Template
+              │
+              ▼
+       Save User + Template
+
+Important point
+
+The exact implementation depends on which K30 model/firmware and communication method you have. Many K30 devices communicate over TCP/IP using the ZKTeco SDK/protocol, and fingerprint enrollment can have restrictions depending on the device and SDK.
+
+If you tell me what you're developing with—for example PHP, Python, C#, Java, Node.js, Android, or a web application—I can show you the actual Add User → Add Fingerprint → Save implementation for the K30.

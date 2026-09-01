@@ -1,0 +1,24 @@
+{
+  "backupDate": "2026-08-12T11:52:09.210Z",
+  "device": {
+    "ip": "192.168.1.201",
+    "port": 4370
+  },
+  "deviceInfo": {
+    "name": "x 2008",
+    "firmware": "10",
+    "platform": "JZ4725_TFT",
+    "os": "1",
+    "deviceTime": "1999-12-31T18:40:15.000Z"
+  },
+  "totals": {
+    "users": 32,
+    "attendanceRecords": 23839
+  },
+  "files": [
+    "device-info.json",
+    "device-settings.json",
+    "users.json",
+    "attendance.json"
+  ]
+}
