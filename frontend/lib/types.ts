@@ -1,3 +1,18 @@
+export interface User {
+  id: string;
+  username: string;
+  name: string;
+  role: string;
+}
+
+export interface AuthResponse {
+  success: boolean;
+  message?: string;
+  token?: string;
+  user?: User;
+  error?: string;
+}
+
 export interface Employee {
   _id: string;
   deviceUserId: string;

@@ -4,15 +4,33 @@ A production-grade integration and real-time attendance tracking platform for ZK
 
 ---
 
+## 🔐 Authentication & Access Control
+
+Access to both the **API** and the **Next.js Web Dashboard** is protected with JWT (JSON Web Tokens) and bcrypt password hashing.
+
+### Administrator Account Setup
+When the backend starts, administrator credentials are loaded securely from the gitignored `credentials.env` file:
+
+| Field | Configuration |
+| :--- | :--- |
+| **Username** | Defined by `ADMIN_USERNAME` in `credentials.env` |
+| **Password** | Defined by `ADMIN_PASSWORD` in `credentials.env` (gitignored) |
+| **Role** | `admin` |
+
+*(Note: Never commit passwords to version control. Passwords and keys must always remain in gitignored files).*
+
+---
+
 ## 📁 Repository Structure
 
 ```
 d:\BioMetric Project D/
 ├── backend/                       # Node.js + Express API & Hardware Gateway
 │   ├── config/                    # MongoDB connection configuration
-│   ├── models/                    # Employee & Attendance Mongoose schemas
-│   ├── controllers/               # API controllers (attendance, employee, device)
-│   ├── routes/                    # Express REST routes
+│   ├── models/                    # User (Auth), Employee & Attendance schemas
+│   ├── controllers/               # Auth, attendance, employee, device controllers
+│   ├── middleware/                # JWT route protection middleware (protect, requireAdmin)
+│   ├── routes/                    # Protected REST routes & public /api/auth routes
 │   ├── services/                  # K30 Device Manager, sync, & realtime services
 │   ├── scripts/                   # Standalone scripts (time sync, device test)
 │   ├── .env                       # Backend environment variables
@@ -20,9 +38,9 @@ d:\BioMetric Project D/
 │   └── server.js                  # Main server entry point
 │
 ├── frontend/                      # Next.js 16 Web Application
-│   ├── app/                       # App Router pages and layout
-│   ├── components/                # UI components (Navbar, StatsCards, Tables, Modals)
-│   ├── lib/                       # API clients and TypeScript types
+│   ├── app/                       # App Router pages and layout with AuthProvider
+│   ├── components/                # UI components (LoginForm, Navbar, StatsCards, Tables, Modals)
+│   ├── lib/                       # Auth Context, API clients with Bearer token injection
 │   └── package.json               # Frontend dependencies
 │
 ├── other/                         # Managed archive of non-backend files
@@ -58,6 +76,10 @@ npm run frontend:dev
 # Build Frontend for Production
 npm run frontend:build
 ```
+
+1. Open **http://localhost:3000** in your browser.
+2. Sign in with the credentials defined in your gitignored `credentials.env` file.
+3. Access real-time attendance logs, employee rosters, and device synchronization controls!
 
 ---
 

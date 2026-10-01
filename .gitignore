@@ -21,11 +21,24 @@ node_modules/
 *.key
 *.cert
 
-# Allow environment example files
+# Password & Credentials Files
+credentials.env
+*/credentials.env
+.credentials
+*/.credentials
+passwords.env
+*/passwords.env
+*.credentials
+*.secrets
+
+# Allow environment and credentials example files
 !.env.example
 !.env.local.example
 !*/.env.example
 !*/.env.local.example
+!credentials.example.env
+!*/credentials.example.env
+
 
 # ==========================================
 # Next.js & Frontend Build Outputs

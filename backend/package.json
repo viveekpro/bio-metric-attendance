@@ -9,13 +9,20 @@
     "set-time": "node scripts/set-device-time.js",
     "test-device": "node scripts/device_test.js"
   },
-  "keywords": ["zkteco", "k30", "biometric", "attendance"],
+  "keywords": [
+    "zkteco",
+    "k30",
+    "biometric",
+    "attendance"
+  ],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "bcryptjs": "^3.0.3",
     "cors": "^2.8.6",
     "dotenv": "^17.4.2",
     "express": "^5.2.1",
+    "jsonwebtoken": "^9.0.3",
     "mongoose": "^9.9.3",
     "zkteco-js": "^1.7.2"
   }

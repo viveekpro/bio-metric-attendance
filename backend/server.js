@@ -1,12 +1,36 @@
-require("dotenv").config();
+const path = require("path");
+const fs = require("fs");
+const dotenv = require("dotenv");
+
+// Load primary environment variables
+dotenv.config();
+
+// Load gitignored credentials file if present
+const credentialCandidates = [
+    path.join(__dirname, "credentials.env"),
+    path.join(__dirname, "../credentials.env"),
+    path.join(__dirname, ".credentials"),
+    path.join(__dirname, "../.credentials")
+];
+
+for (const credFile of credentialCandidates) {
+    if (fs.existsSync(credFile)) {
+        dotenv.config({ path: credFile, override: true });
+        break;
+    }
+}
 
 const express = require("express");
 const cors = require("cors");
 
 const connectDB = require("./config/db");
+const authRoutes = require("./routes/authRoutes");
 const employeeRoutes = require("./routes/employeeRoutes");
 const attendanceRoutes = require("./routes/attendanceRoutes");
 const deviceRoutes = require("./routes/deviceRoutes");
+
+const { protect } = require("./middleware/authMiddleware");
+const { seedInitialAdmin } = require("./controllers/authController");
 
 const {
     startRealtimeAttendance,
@@ -19,10 +43,13 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Routes
-app.use("/api/employees", employeeRoutes);
-app.use("/api/attendance", attendanceRoutes);
-app.use("/api/device", deviceRoutes);
+// Public Auth Routes
+app.use("/api/auth", authRoutes);
+
+// Protected API Routes (requires Bearer token)
+app.use("/api/employees", protect, employeeRoutes);
+app.use("/api/attendance", protect, attendanceRoutes);
+app.use("/api/device", protect, deviceRoutes);
 
 // Root and Health check
 app.get("/", (req, res) => {
@@ -30,7 +57,9 @@ app.get("/", (req, res) => {
         name: "ZK-K30 Attendance Server",
         version: "2.0.0",
         status: "running",
+        auth: "JWT enabled",
         endpoints: {
+            auth: "/api/auth/login",
             employees: "/api/employees",
             attendance: "/api/attendance",
             device: "/api/device"
@@ -60,6 +89,9 @@ const startServer = async () => {
     try {
         // Connect to MongoDB
         await connectDB();
+
+        // Seed default admin account if database is empty
+        await seedInitialAdmin();
 
         const PORT = process.env.PORT || 5000;
 
