@@ -39,13 +39,17 @@ async function setDeviceTime() {
         console.log("PC time : ", pcTime.toString());
         console.log("K30 time:", k30Time.toString());
 
-        await device.disconnect();
-
-        console.log("\n✅ Disconnected from K30");
-
     } catch (error) {
         console.error("\n❌ ERROR:");
         console.error(error);
+    } finally {
+        try {
+            await device.disconnect();
+            console.log("\n✅ Disconnected from K30");
+        } catch (disconnectError) {
+            console.log("Disconnect warning:", disconnectError.message);
+        }
+        process.exit(0);
     }
 }
 

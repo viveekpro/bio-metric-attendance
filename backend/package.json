@@ -1,0 +1,22 @@
+{
+  "name": "biometric-backend",
+  "version": "1.0.0",
+  "description": "ZKTeco K30 Biometric Attendance API & Realtime Gateway",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "set-time": "node scripts/set-device-time.js",
+    "test-device": "node scripts/device_test.js"
+  },
+  "keywords": ["zkteco", "k30", "biometric", "attendance"],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "mongoose": "^9.9.3",
+    "zkteco-js": "^1.7.2"
+  }
+}
